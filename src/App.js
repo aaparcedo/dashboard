@@ -27,17 +27,10 @@ function App() {
             <Topbar />
             <Routes>
               <Route path="/" element={<Dashboard />} />
-<<<<<<< HEAD
-              {/* <Route path="/team" element={<Team />} /> */}
-              {/* <Route path="/contacts" element={<Contacts />} /> */}
-              {/* <Route path="/invoices" element={<Invoices />} /> */}
-              <Route path="/form" element={<Form />} />
-=======
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />
               {/* <Route path="/form" element={<Form />} /> */}
->>>>>>> d6a5a4eb3315df09442037d7ee2f54fe41afba49
               {/* <Route path="/bar" element={<Bar />} /> */}
               {/* <Route path="/pie" element={<Pie />} /> */}
               {/* <Route path="/line" element={<Line />} /> */}
