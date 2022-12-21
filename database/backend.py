@@ -12,25 +12,43 @@ db = SQLAlchemy(app)
 BASE = "http://127.0.0.1:5000/"
 
 class ClientModel(db.Model):
+    #todo change string size
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.String(200), nullable=False, unique=True)
+    access = db.Column(db.String(200), nullable=False,)
+
 
     def __repr__(self):
-        return f"client(name = {self.name})"
+        return f"client(name = {self.name}, email = {self.email}, age = {self.age}, phone = {self.phone}, access = " \
+               f"{self.access})"
 
-# db.create_all() Creates database and tables
+db.create_all()# Creates database and tables
 
 
 client_put_args = reqparse.RequestParser()
 client_put_args.add_argument("name", type=str, help="Add client name", required=True)
+client_put_args.add_argument("email", type=str, help="Add email", required=True)
+client_put_args.add_argument("age", type=int, help="Add age", required=True)
+client_put_args.add_argument("phone", type=str, help="Add phone number", required=True)
+client_put_args.add_argument("access", type=str, help="Add access level", required=True)
 
 client_patch_args = reqparse.RequestParser()
 client_patch_args.add_argument("name", type=str, help="Add client name", required=True)
-
+client_patch_args.add_argument("email", type=str, help="Add email", required=True)
+client_patch_args.add_argument("age", type=int, help="Add age", required=True)
+client_patch_args.add_argument("phone", type=str, help="Add phone number", required=True)
+client_patch_args.add_argument("access", type=str, help="Add access level", required=True)
 
 resource_fields = {
     'id': fields.Integer,
     'name': fields.String,
+    'email': fields.String,
+    'age': fields.Integer,
+    'phone': fields.String,
+    'access': fields.String,
 }
 
 
@@ -49,7 +67,8 @@ class client(Resource):
         if result:
             abort(409, message="client id already in use")
 
-        client = ClientModel(id=client_id, name=args['name'])
+        client = ClientModel(id=client_id, name=args['name'], email=args['email'], age=args['age'], phone=args['phone'],
+                             access=args['access'])
         db.session.add(client)
         db.session.commit()
         return client, 201
@@ -63,6 +82,14 @@ class client(Resource):
 
         if args['name']:
             result.name = args['name']
+        if args['email']:
+            result.email = args['email']
+        if args['age']:
+            result.age = args['age']
+        if args['phone']:
+            result.phone = args['phone']
+        if args['access']:
+            result.access = args['access']
 
         db.session.commit()
 
@@ -78,35 +105,6 @@ class client(Resource):
         return 200
 
 
-def create(id, data):
-    response = requests.put(BASE + "client/" + id, data)
-    return response
-
-
-def read(id):
-    response = requests.get(BASE + "client/" + id)
-    print(response.content)
-    return response
-
-
-def update(id, data):
-    response = requests.patch(BASE + "client/" + id, data)
-    return response
-
-
-def delete_(id):
-    response = requests.delete(BASE + "client/" + str(id))
-    return response
-
-
-def delete_range(start_id, end_id):
-    for i in range(start_id, end_id + 1):
-        requests.delete(BASE + "client/" + str(i))
-
-def create_test_case(id):
-    data = {"name": "test", "type": "test", "author": "test test", "page_count": 1, "genre": "test",
-            "progress": "test"}
-    response = requests.put(BASE + "client/" + str(id), data)
 
 api.add_resource(client, "/client/<int:client_id>")
 if __name__ == "__main__":
