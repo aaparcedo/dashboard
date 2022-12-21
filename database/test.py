@@ -7,7 +7,7 @@ def excel_to_db():
     excel_file_path = "data.xlsx"
     df = pd.read_excel(excel_file_path)
     BASE = "http://127.0.0.1:5000/"
-    for i in range(len(df.values)): #todo change values
+    for i in range(len(df.values)):
         data = {"name": df.values[i][1],
                 "email": df.values[i][2],
                 "age": df.values[i][3],
