@@ -25,11 +25,7 @@
     "react-dom": "^18.2.0",
     "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^6.5.0",
-<<<<<<< HEAD
-    "react-scripts": "5.0.1",
-=======
     "react-scripts": "^5.0.1",
->>>>>>> d6a5a4eb3315df09442037d7ee2f54fe41afba49
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
