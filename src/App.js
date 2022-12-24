@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+
+import SignIn from "./components/auth/SignIn"
+// import Signup from "./components/auth/Signup"
+
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -29,6 +33,7 @@ function App() {
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
+              <Route path="/login" element={<SignIn />} />
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
               <Route path="/contacts" element={<Contacts />} />
