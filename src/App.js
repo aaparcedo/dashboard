@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-
-import SignIn from "./components/auth/SignIn"
+import SignIn from "./components/auth/SignIn";
 // import Signup from "./components/auth/Signup"
-
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -19,6 +17,7 @@ import Geography from "./scenes/geography";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar";
+import PrivateRoutes from "./PrivateRoutes"
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -32,20 +31,22 @@ function App() {
           <Sidebar isSidebar={isSidebar} />
           <main className="content">
             <Topbar setIsSidebar={setIsSidebar} />
-            <Routes>
-              <Route path="/login" element={<SignIn />} />
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/contacts" element={<Contacts />} />
-              <Route path="/invoices" element={<Invoices />} />
-              <Route path="/form" element={<Form />} />
-              <Route path="/bar" element={<Bar />} />
-              <Route path="/pie" element={<Pie />} />
-              <Route path="/line" element={<Line />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/geography" element={<Geography />} />
-            </Routes>
+              <Routes>
+                <Route element={<PrivateRoutes />}>
+                  <Route path="/" element={<Dashboard />} exact />
+                  <Route path="/team" element={<Team />} />
+                  <Route path="/contacts" element={<Contacts />} />
+                  <Route path="/invoices" element={<Invoices />} />
+                  <Route path="/form" element={<Form />} />
+                  <Route path="/bar" element={<Bar />} />
+                  <Route path="/pie" element={<Pie />} />
+                  <Route path="/line" element={<Line />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/geography" element={<Geography />} />
+                </Route>
+                <Route path="/login" element={<SignIn />} />
+              </Routes>
           </main>
         </div>
       </ThemeProvider>
