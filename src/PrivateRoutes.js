@@ -1,9 +1,10 @@
 import { Outlet, Navigate } from 'react-router-dom'
+import { getAuth } from "firebase/auth"
 
 const PrivateRoutes = () => {
-    let auth = {'token': false}
+    let auth = getAuth();
     return (
-        auth.token ? < Outlet /> : <Navigate to="/login" />
+        auth ? < Outlet /> : <Navigate to="/login" />
     )
 }
 
