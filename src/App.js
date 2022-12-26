@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import SignIn from "./components/auth/SignIn";
+import Login from "./auth/Login";
 // import Signup from "./components/auth/Signup"
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
@@ -57,7 +57,7 @@ function App() {
                   <Route path="/calendar" element={<Calendar />} />
                   <Route path="/geography" element={<Geography />} />
                 </Route>
-                <Route path="/login" element={<SignIn />} />
+                <Route path="/login" element={<Login />} />
               </Routes>
           </main>
         </div>
