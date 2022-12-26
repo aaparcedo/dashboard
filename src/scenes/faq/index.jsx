@@ -7,11 +7,16 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { tokens } from "../../theme";
 
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../firebase'
+
 const FAQ = () => {
+    const [user, loading, error] = useAuthState();
+
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
 
-    return (
+    return (user && (
         <Box m="20px"> 
                 <Header title="FAQ" subtitle="Frequently Asked Questions Page" />
 
@@ -86,7 +91,7 @@ const FAQ = () => {
                 </Accordion >
 
     </Box>
-    );
+    ));
 };
 
 export default FAQ;

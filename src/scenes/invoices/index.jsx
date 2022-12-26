@@ -5,7 +5,14 @@ import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
+
+
 const Invoices = () => {
+
+  const [user, loading, error] = useAuthState(auth);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -45,7 +52,7 @@ const Invoices = () => {
     },
   ];
 
-  return (
+  return (user && (
     <Box m="20px">
       <Header
         title="INVOICES"
@@ -87,7 +94,7 @@ const Invoices = () => {
         />
       </Box>
     </Box>
-  );
+  ));
 };
 
 export default Invoices;

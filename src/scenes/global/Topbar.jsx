@@ -9,12 +9,18 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../firebase'
+
 const Topbar = () => {
+
+  const [user, loading, error] = useAuthState(auth);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
-  return (
+  return (user && (
     <Box display="flex" justifyContent="space-between" p={2}>
       {/* SEARCH BAR */}
       <Box
@@ -48,7 +54,7 @@ const Topbar = () => {
         </IconButton>
       </Box>
     </Box>
-  );
+  ));
 };
 
 export default Topbar;

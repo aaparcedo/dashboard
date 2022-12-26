@@ -16,7 +16,12 @@ import Header from "../../components/Header";
 import { tokens } from "../../theme";
 import { format } from 'date-fns';
 
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../firebase'
+
 const Calendar = () => {
+  const [user, loading, error] = useAuthState(auth);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
@@ -47,7 +52,7 @@ const Calendar = () => {
     }
   };
 
-  return (
+  return (user && (
     <Box m="20px">
       <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
 
@@ -122,7 +127,7 @@ const Calendar = () => {
         </Box>
       </Box>
     </Box>
-  );
+  ));
 };
 
 export default Calendar;

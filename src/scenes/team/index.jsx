@@ -7,7 +7,12 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
 
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
+
 const Team = () => {
+  const [user, loading, error] = useAuthState(auth);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
@@ -68,7 +73,7 @@ const Team = () => {
     },
   ];
 
-  return (
+  return (user && (
     <Box m="20px">
       <Header title="TEAM" subtitle="Managing the Team Members" />
       <Box
@@ -106,7 +111,7 @@ const Team = () => {
         components={{ Toolbar: GridToolbar }} />
       </Box>
     </Box>
-  );
+  ));
 };
 
 export default Team;
