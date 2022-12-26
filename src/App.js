@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import SignIn from "./components/auth/SignIn";
 // import Signup from "./components/auth/Signup"
@@ -22,15 +22,27 @@ import PrivateRoutes from "./PrivateRoutes"
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  
+  // for hiding sidebar
+  const [currPath, setCurrPath] = useState(window.location.pathname)
 
+  // also for hiding the sidebar/topbar
+  // set the current path
+  useEffect(() => {
+    setCurrPath(window.location.pathname)
+  }, [])
+ 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <Sidebar isSidebar={isSidebar} />
+          {/* IF THE USER IS IN THE LOGIN PAGE
+              DO NOT SHOW THE SIDEBAR OR THE TOPBAR*/}
+          {currPath !== '/login' && <> <Sidebar isSidebar={isSidebar} /> <Topbar setIsSidebar={setIsSidebar} /></> }
+          
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
+            
               <Routes>
                 <Route element={<PrivateRoutes />}>
                   <Route path="/" element={<Dashboard />} exact />
