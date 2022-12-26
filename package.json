@@ -27,6 +27,7 @@
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.1.1",
     "react-pro-sidebar": "^0.7.1",
     "react-router-dom": "^6.5.0",
     "react-scripts": "^5.0.1",

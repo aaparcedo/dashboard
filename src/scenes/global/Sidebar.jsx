@@ -17,6 +17,9 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../firebase'
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -34,12 +37,15 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
+
+  const [user, loading, error] = useAuthState(auth);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  return (
+  return (user && (
     <Box
       sx={{
         "& .pro-sidebar-inner": {
@@ -222,7 +228,7 @@ const Sidebar = () => {
         </Menu>
       </ProSidebar>
     </Box>
-  );
+  ));
 };
 
 export default Sidebar;

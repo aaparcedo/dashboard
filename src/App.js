@@ -19,7 +19,14 @@ import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar";
 import PrivateRoutes from "./PrivateRoutes"
 
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './firebase'
+
 function App() {
+
+  const [user, loading, error] = useAuthState(auth);
+  console.log(user?.email);
+
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   
@@ -39,13 +46,15 @@ function App() {
         <div className="app">
           {/* IF THE USER IS IN THE LOGIN PAGE
               DO NOT SHOW THE SIDEBAR OR THE TOPBAR*/}
-          {currPath !== '/login' && <> <Sidebar isSidebar={isSidebar} /> <Topbar setIsSidebar={setIsSidebar} /></> }
+          {currPath !== '/login' && <> <Sidebar isSidebar={isSidebar} /></> }
           
           <main className="content">
+          {currPath !== '/login' && <> <Topbar setIsSidebar={setIsSidebar} /></> }
+
             
               <Routes>
                 <Route element={<PrivateRoutes />}>
-                  <Route path="/" element={<Dashboard />} exact />
+                  <Route path="/dashboard" element={<Dashboard />} exact />
                   <Route path="/team" element={<Team />} />
                   <Route path="/contacts" element={<Contacts />} />
                   <Route path="/invoices" element={<Invoices />} />
@@ -57,7 +66,7 @@ function App() {
                   <Route path="/calendar" element={<Calendar />} />
                   <Route path="/geography" element={<Geography />} />
                 </Route>
-                <Route path="/login" element={<Login />} />
+                <Route path="/" element={<Login />} />
               </Routes>
           </main>
         </div>
