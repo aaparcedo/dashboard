@@ -13,11 +13,16 @@ import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
+
 const Dashboard = () => {
+  const [user, loading, error] = useAuthState(auth);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  return (
+  return (user && (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -278,7 +283,7 @@ const Dashboard = () => {
         </Box>
       </Box>
     </Box>
-  );
+  ));
 };
 
 export default Dashboard;

@@ -5,7 +5,13 @@ import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
+
 const Contacts = () => {
+
+  const [user, loading, error] = useAuthState(auth);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
