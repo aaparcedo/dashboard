@@ -7,7 +7,7 @@ import { auth } from '../../firebase'
 
 const Bar = () => {
 
-    const [user, loading, error] = useAuthState();
+    const [user, loading, error] = useAuthState(auth);
 
     return (user && (
         <Box m="20px">

@@ -11,7 +11,7 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../firebase'
 
 const FAQ = () => {
-    const [user, loading, error] = useAuthState();
+    const [user, loading, error] = useAuthState(auth);
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
