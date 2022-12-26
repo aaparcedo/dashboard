@@ -58,7 +58,7 @@ const Contacts = () => {
     },
   ];
 
-  return (
+  return (user && (
     <Box m="20px">
       <Header
         title="CONTACTS"
@@ -104,7 +104,7 @@ const Contacts = () => {
         />
       </Box>
     </Box>
-  );
+  ));
 };
 
 export default Contacts;
