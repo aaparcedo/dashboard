@@ -6,7 +6,10 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../firebase'
 
 const Line = () => {
-  const [user, loading, error] = useAuthState(auth);
+  const [user,
+    //  loading,
+      // error
+    ] = useAuthState(auth);
 
   return (user && (
     <Box m="20px">

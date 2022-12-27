@@ -8,20 +8,16 @@ import { useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 
-import MuiDrawer from '../drawer';
-import { useState } from 'react';
-
 const Contacts = () => {
-
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleRowClick = () => {
     console.log("row clicked");
-    // setIsDrawerOpen(true);
-    <MuiDrawer isDrawerOpenOrClosed={true}></MuiDrawer>
   };
 
-  const [user, loading, error] = useAuthState(auth);
+  const [user, 
+    // loading,
+    //  error
+    ] = useAuthState(auth);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

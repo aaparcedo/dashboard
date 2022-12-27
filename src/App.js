@@ -24,7 +24,10 @@ import { auth } from './firebase'
 
 function App() {
 
-  const [user, loading, error] = useAuthState(auth);
+  const [user,
+    //  loading,
+      // error
+    ] = useAuthState(auth);
   console.log(user?.email);
 
   const [theme, colorMode] = useMode();

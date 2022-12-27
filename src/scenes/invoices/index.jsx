@@ -8,10 +8,12 @@ import { useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 
-
 const Invoices = () => {
-
-  const [user, loading, error] = useAuthState(auth);
+  const [
+    user,
+    //  loading,
+    // error
+  ] = useAuthState(auth);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -36,15 +38,15 @@ const Invoices = () => {
       flex: 1,
     },
     {
-        field: "cost",
-        headerName: "Cost",
-        flex: 1,
-        renderCell: (params) => (
-            <Typography color={colors.greenAccent[500]}>
-                ${params.row.cost}
-            </Typography>
-        )
-      },
+      field: "cost",
+      headerName: "Cost",
+      flex: 1,
+      renderCell: (params) => (
+        <Typography color={colors.greenAccent[500]}>
+          ${params.row.cost}
+        </Typography>
+      ),
+    },
     {
       field: "date",
       headerName: "Date",
@@ -52,49 +54,48 @@ const Invoices = () => {
     },
   ];
 
-  return (user && (
-    <Box m="20px">
-      <Header
-        title="INVOICES"
-        subtitle="List of Invoice Balances"
-      />
-      <Box
-        m="40px 0 0 0"
-        height="75vh"
-        sx={{
-          "& .MuiDataGrid-root": {
-            border: "none",
-          },
-          "& .MuiDataGrid-cell": {
-            borderBottom: "none",
-          },
-          "& .name-column--cell": {
-            color: colors.greenAccent[300],
-          },
-          "& .MuiDataGrid-columnHeaders": {
-            backgroundColor: colors.blueAccent[700],
-            borderBottom: "none",
-          },
-          "& .MuiDataGrid-virtualScroller": {
-            backgroundColor: colors.primary[400],
-          },
-          "& .MuiDataGrid-footerContainer": {
-            borderTop: "none",
-            backgroundColor: colors.blueAccent[700],
-          },
-          "& .MuiCheckbox-root": {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-        }}
-      >
-        <DataGrid
-          checkboxSelection
-          rows={mockDataInvoices}
-          columns={columns}
-        />
+  return (
+    user && (
+      <Box m="20px">
+        <Header title="INVOICES" subtitle="List of Invoice Balances" />
+        <Box
+          m="40px 0 0 0"
+          height="75vh"
+          sx={{
+            "& .MuiDataGrid-root": {
+              border: "none",
+            },
+            "& .MuiDataGrid-cell": {
+              borderBottom: "none",
+            },
+            "& .name-column--cell": {
+              color: colors.greenAccent[300],
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: colors.blueAccent[700],
+              borderBottom: "none",
+            },
+            "& .MuiDataGrid-virtualScroller": {
+              backgroundColor: colors.primary[400],
+            },
+            "& .MuiDataGrid-footerContainer": {
+              borderTop: "none",
+              backgroundColor: colors.blueAccent[700],
+            },
+            "& .MuiCheckbox-root": {
+              color: `${colors.greenAccent[200]} !important`,
+            },
+          }}
+        >
+          <DataGrid
+            checkboxSelection
+            rows={mockDataInvoices}
+            columns={columns}
+          />
+        </Box>
       </Box>
-    </Box>
-  ));
+    )
+  );
 };
 
 export default Invoices;
