@@ -6,15 +6,30 @@ import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
+import { auth, db} from "../../firebase";
+
+import { useState, useEffect } from "react";
+import { collection, getDocs } from "firebase/firestore";
 
 const Contacts = () => {
 
   const [user, loading, error] = useAuthState(auth);
+  const [contacts, setContacts] = useState([]);
+  const contactsCollectionRef = collection(db, "contacts");
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  useEffect (() => {
+    const getContacts = async () => {
+      const data = await getDocs(contactsCollectionRef);
+      setContacts(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+      console.log(data);
+    };
+    getContacts();
+  }, []);
+
+  
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
     { field: "registrarId", headerName: "Registrar ID" },
@@ -62,8 +77,7 @@ const Contacts = () => {
     <Box m="20px">
       <Header
         title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
-      />
+        subtitle={user.age}/>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -92,13 +106,13 @@ const Contacts = () => {
             color: `${colors.greenAccent[200]} !important`,
           },
           "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            color: `${colors.grey[100]} !important`,
+            color: `${colors.grey[500]} !important`,
           },
         }}
       >
         <DataGrid
           checkboxSelection
-          rows={mockDataContacts}
+          rows={db}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
         />
