@@ -8,7 +8,18 @@ import { useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 
+import MuiDrawer from '../drawer';
+import { useState } from 'react';
+
 const Contacts = () => {
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleRowClick = () => {
+    console.log("row clicked");
+    // setIsDrawerOpen(true);
+    <MuiDrawer isDrawerOpenOrClosed={true}></MuiDrawer>
+  };
 
   const [user, loading, error] = useAuthState(auth);
 
@@ -61,8 +72,8 @@ const Contacts = () => {
   return (user && (
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="CLIENTS"
+        subtitle="List of Clients for Future Reference"
       />
       <Box
         m="40px 0 0 0"
@@ -101,6 +112,8 @@ const Contacts = () => {
           rows={mockDataContacts}
           columns={columns}
           components={{ Toolbar: GridToolbar }}
+          // make this function to handle row click and open drawer with all information
+          onRowClick={handleRowClick}
         />
       </Box>
     </Box>
