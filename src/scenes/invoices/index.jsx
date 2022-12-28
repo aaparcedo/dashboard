@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -13,7 +12,6 @@ const Invoices = () => {
   const [user, loading, error] = useAuthState(auth);
   const [invoices, setInvoices] = useState([]);
   const invoicesCollectionRef = collection(db, "invoices");
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 

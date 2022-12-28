@@ -10,12 +10,9 @@ import { collection, getDocs, onSnapshot} from "firebase/firestore";
 
 const Contacts = () => {
 
-
   const [user, loading, error] = useAuthState(auth);
   const [contacts, setContacts] = useState([]);
   const contactsCollectionRef = collection(db, "contacts");
-
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
