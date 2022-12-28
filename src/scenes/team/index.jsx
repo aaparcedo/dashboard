@@ -6,44 +6,52 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../components/Header";
-
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
+import { auth, db} from "../../firebase";
+import { useState, useEffect } from "react";
+import { collection, getDocs, onSnapshot} from "firebase/firestore";
 
 const Team = () => {
   const [user, loading, error] = useAuthState(auth);
+  const [team, setTeam] = useState([]);
+  const teamCollectionRef = collection(db, "team");
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  const getTeam = async () => {
+    try {
+      const data = await getDocs(teamCollectionRef);
+      setTeam(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // Perform any necessary clean-up tasks here
+    }
+  };
+  
+  useEffect(() => {
+    const unsubscribe = onSnapshot(teamCollectionRef, (snapshot) => {
+      const updatedTeam = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+      setTeam(updatedTeam);
+    });
+  
+    return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
+  }, []);
+
   const columns = [
     { field: "id", headerName: "ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-      field: "accessLevel",
-      headerName: "Access Level",
-      flex: 1,
+
+    {field: "name", headerName: "Name", flex: 1, cellClassName: "name-column--cell"},
+
+    {field: "age", headerName: "Age", type: "number", headerAlign: "left", align: "left"},
+
+    {field: "phone", headerName: "Phone Number", flex: 1},
+
+    {field: "email", headerName: "Email", flex: 1},
+
+    {field: "accessLevel", headerName: "Access Level", flex: 1,
       renderCell: ({ row: { access } }) => {
         return (
           <Box
@@ -57,7 +65,7 @@ const Team = () => {
                 ? colors.greenAccent[600]
                 : access === "manager"
                 ? colors.greenAccent[700]
-                : colors.greenAccent[700]
+                : colors.greenAccent[800]
             }
             borderRadius="4px"
           >
@@ -103,10 +111,13 @@ const Team = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[500]} !important`,
+          },
         }}
       >
         <DataGrid checkboxSelection 
-        rows={mockDataTeam} 
+        rows={team} 
         columns={columns}
         components={{ Toolbar: GridToolbar }} />
       </Box>

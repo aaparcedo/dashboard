@@ -4,41 +4,50 @@ import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
-
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
-
+import { auth, db } from "../../firebase";
+import { useState, useEffect } from "react";
+import { collection, getDocs, onSnapshot} from "firebase/firestore";
 
 const Invoices = () => {
-
   const [user, loading, error] = useAuthState(auth);
+  const [invoices, setInvoices] = useState([]);
+  const invoicesCollectionRef = collection(db, "invoices");
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  const getInvoices = async () => {
+    try {
+      const data = await getDocs(invoicesCollectionRef);
+      setInvoices(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // Perform any necessary clean-up tasks here
+    }
+  };
+  
+  useEffect(() => {
+    const unsubscribe = onSnapshot(invoicesCollectionRef, (snapshot) => {
+      const updatedInvoices = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+      setInvoices(updatedInvoices);
+    });
+  
+    return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
+  }, []);
+
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
-    {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
-    },
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1,
-    },
-    {
-        field: "cost",
-        headerName: "Cost",
-        flex: 1,
+
+    {field: "name", headerName: "Name", flex: 1, cellClassName: "name-column--cell"},
+
+    {field: "phone", headerName: "Phone Number", flex: 1},
+
+    {field: "email", headerName: "Email", flex: 1},
+
+    {field: "cost", headerName: "Cost", flex: 1,
         renderCell: (params) => (
             <Typography color={colors.greenAccent[500]}>
                 ${params.row.cost}
@@ -85,11 +94,14 @@ const Invoices = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[500]} !important`,
+          },
         }}
       >
         <DataGrid
           checkboxSelection
-          rows={mockDataInvoices}
+          rows={invoices}
           columns={columns}
         />
       </Box>
