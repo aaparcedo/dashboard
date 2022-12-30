@@ -7,6 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db} from "../../firebase";
 import { useState, useEffect } from "react";
 import { collection, getDocs, onSnapshot} from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Contacts = () => {
 
@@ -15,7 +16,8 @@ const Contacts = () => {
   const contactsCollectionRef = collection(db, "contacts");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const navigate  = useNavigate();
+  
 const getContacts = async () => {
   try {
     const data = await getDocs(contactsCollectionRef);
@@ -36,6 +38,12 @@ useEffect(() => {
 
   return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
 }, []);
+
+useEffect(() => {
+  if (!user) {
+    navigate('/');;
+  }
+}, [user, navigate]);
 
 
   const columns = [

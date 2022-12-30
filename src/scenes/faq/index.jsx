@@ -6,7 +6,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { tokens } from "../../theme";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../firebase'
 
@@ -15,6 +16,13 @@ const FAQ = () => {
 
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
+    const navigate  = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+          navigate('/');;
+        }
+      }, [user, navigate]);
 
     return (user && (
         <Box m="20px"> 

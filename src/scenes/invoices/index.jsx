@@ -6,6 +6,7 @@ import { useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { collection, getDocs, onSnapshot} from "firebase/firestore";
 
 const Invoices = () => {
@@ -14,7 +15,9 @@ const Invoices = () => {
   const invoicesCollectionRef = collection(db, "invoices");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate  = useNavigate();
 
+  
   const getInvoices = async () => {
     try {
       const data = await getDocs(invoicesCollectionRef);
@@ -35,6 +38,12 @@ const Invoices = () => {
   
     return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');;
+    }
+  }, [user, navigate]);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },

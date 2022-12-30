@@ -12,7 +12,8 @@ import GeographyChart from "../../components/GeographyChart";
 import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
-
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 
@@ -21,6 +22,13 @@ const Dashboard = () => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate  = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');;
+    }
+  }, [user, navigate]);
 
   return (user && (
     <Box m="20px">

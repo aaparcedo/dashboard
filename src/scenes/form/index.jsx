@@ -3,9 +3,10 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../firebase'
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -36,12 +37,20 @@ const userSchema = yup.object().shape({
 const Form = () => {
 
   const [user, loading, error] = useAuthState(auth);
+  const navigate  = useNavigate();
 
   const isNonMobile = useMediaQuery("(min-width: 600px)");
 
   const handleFormSubmit = (values) => {
     console.log(values);
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');;
+    }
+  }, [user, navigate]);
+
   return (user && (
     <Box m="20px">
       <Header title="CREATE USER" subtitle="Create a New User Profile" />

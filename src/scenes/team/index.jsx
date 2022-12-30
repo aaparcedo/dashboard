@@ -8,6 +8,7 @@ import Header from "../../components/Header";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db} from "../../firebase";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { collection, getDocs, onSnapshot} from "firebase/firestore";
 
 const Team = () => {
@@ -16,6 +17,7 @@ const Team = () => {
   const teamCollectionRef = collection(db, "team");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate  = useNavigate();
 
   const getTeam = async () => {
     try {
@@ -37,6 +39,13 @@ const Team = () => {
   
     return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');;
+    }
+  }, [user, navigate]);
+
 
   const columns = [
     { field: "id", headerName: "ID" },
