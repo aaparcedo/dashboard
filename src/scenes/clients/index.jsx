@@ -81,7 +81,8 @@ const Contacts = () => {
   function handleRowClick(event) {
     // Get the client id from the data-id attribute of the clicked row
     // console.log(event);
-    const clientId = event['id']
+    const clientId = event['id'];
+    console.log(contacts[clientId]);
   
     // Use the `useHistory` hook to access the `history` object
     // and navigate to the client details page

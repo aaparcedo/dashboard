@@ -8,6 +8,7 @@ import Dashboard from "./scenes/dashboard";
 import Team from "./scenes/team";
 import Invoices from "./scenes/invoices";
 import Clients from "./scenes/clients";
+import ClientDetails from "./scenes/clientDetails";
 import Bar from "./scenes/bar";
 import Form from "./scenes/form";
 import Line from "./scenes/line";
@@ -62,7 +63,7 @@ function App() {
 
             <Routes>
               <Route element={<PrivateRoutes />}>
-                <Route path="/clients/:id" element={<ClientDetailsPage />} />
+                <Route path="/clients/:id" element={<ClientDetails />} />
                 <Route path="/dashboard" element={<Dashboard />} exact />
                 <Route path="/team" element={<Team />} />
                 <Route path="/clients" element={<Clients />} />
