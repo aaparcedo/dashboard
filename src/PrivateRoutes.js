@@ -6,7 +6,7 @@ import { auth } from './firebase'
 
 const PrivateRoutes = () => {
     let credentials = useAuthState(auth);
-    console.log(credentials);
+    // console.log(credentials);
     return (
         credentials ? < Outlet /> : <Navigate to="/" />
     )
