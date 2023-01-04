@@ -10,18 +10,18 @@ import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 
-const Contacts = () => {
+const Clients = () => {
   const [user, loading, error] = useAuthState(auth);
-  const [contacts, setContacts] = useState([]);
-  const contactsCollectionRef = collection(db, "contacts");
+  const [clients, setClients] = useState([]);
+  const clientsCollectionRef = collection(db, "clients");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
-  const getContacts = async () => {
+  const getClients = async () => {
     try {
-      const data = await getDocs(contactsCollectionRef);
-      setContacts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      const data = await getDocs(clientsCollectionRef);
+      setClients(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       console.log(data);
     } catch (error) {
       console.error(error);
@@ -31,12 +31,12 @@ const Contacts = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(contactsCollectionRef, (snapshot) => {
-      const updatedContacts = snapshot.docs.map((doc) => ({
+    const unsubscribe = onSnapshot(clientsCollectionRef, (snapshot) => {
+      const updatedClients = snapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }));
-      setContacts(updatedContacts);
+      setClients(updatedClients);
     });
 
     return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
@@ -52,29 +52,29 @@ const Contacts = () => {
     { field: "id", headerName: "ID", flex: 0.4 },
 
     {
-      field: "name",
-      headerName: "Name",
-      flex: 0.9,
+      field: "firstName",
+      headerName: "First Name",
+      flex: 1,
       cellClassName: "name-column--cell",
     },
 
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
+      field: "lastName",
+      headerName: "Last Name",
       headerAlign: "left",
       align: "left",
+      flex: 1,
     },
 
     { field: "phone", headerName: "Phone Number", flex: 1 },
 
     { field: "email", headerName: "Email", flex: 1 },
 
-    { field: "address", headerName: "Address", flex: 1 },
+    { field: "streetAddress", headerName: "Street Address", flex: 1 },
 
     { field: "city", headerName: "City", flex: 1 },
 
-    { field: "zipcode", headerName: "Zip Code", flex: 1 },
+    { field: "zipCode", headerName: "Zip Code", flex: 1 },
   ];
 
 
@@ -82,7 +82,7 @@ const Contacts = () => {
     // Get the client id from the data-id attribute of the clicked row
     // console.log(event);
     const clientId = event['id'];
-    console.log(contacts[clientId]);
+    // console.log(clientId);
   
     // Use the `useHistory` hook to access the `history` object
     // and navigate to the client details page
@@ -93,7 +93,7 @@ const Contacts = () => {
   return (
     user && (
       <Box m="20px">
-        <Header title="CONTACTS" subtitle={user.age} />
+        <Header title="CLIENTS" subtitle={user.age} />
         <Box
           m="40px 0 0 0"
           height="75vh"
@@ -128,7 +128,7 @@ const Contacts = () => {
         >
           <DataGrid
             checkboxSelection
-            rows={contacts}
+            rows={clients}
             columns={columns}
             components={{ Toolbar: GridToolbar }}
             onRowClick={handleRowClick}
@@ -139,4 +139,4 @@ const Contacts = () => {
   );
 };
 
-export default Contacts;
+export default Clients;
