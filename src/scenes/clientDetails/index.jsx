@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
@@ -33,10 +33,8 @@ const ClientDetails = () => {
     } finally {
       // Perform any necessary clean-up tasks here
     }
-  };  
+  };
 
-  
-  
   useEffect(() => {
     const unsubscribe = onSnapshot(contactsCollectionRef, (snapshot) => {
       const updatedContacts = snapshot.docs.map((doc) => ({
@@ -59,14 +57,24 @@ const ClientDetails = () => {
 
   console.log(contacts[userID]);
 
-  return (contacts[userID] && (
-    <div>
-        hello
-      <h1>{contacts[userID].name}</h1>
-      <h2>{contacts[userID].email}</h2>
-      <h3>{contacts[userID].phone}</h3>
-    </div>
-  ));
+  return (
+    contacts[userID] && (
+      // <div>
+      //     hello
+      //   <h1>{contacts[userID].name}</h1>
+      //   <h2>{contacts[userID].email}</h2>
+      //   <h3>{contacts[userID].phone}</h3>
+      // </div>
+      <Box display="flex" justifyContent="center" alignItems="center">
+        {/* <Header title="CLIENT DETAILS" subtitle="Client details page" /> */}
+        <Box>
+          <Typography>{contacts[userID].name}</Typography>
+          <Typography>{contacts[userID].email}</Typography>
+          <Typography>{contacts[userID].phone}</Typography>
+        </Box>
+      </Box>
+    )
+  );
 };
 
 export default ClientDetails;
