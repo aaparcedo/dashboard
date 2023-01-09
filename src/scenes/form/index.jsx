@@ -3,14 +3,10 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
-
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
-
 
 const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -18,6 +14,7 @@ const phoneRegExp =
 const initialValues = {
   firstName: "",
   lastName: "",
+  dateOfBirth: "",
   email: "",
   phone: "",
   streetAddress: "",
@@ -35,7 +32,8 @@ const initialValues = {
   height: "",
   eyeColor: "",
   hairColor: "",
-
+  uscisLogin: "",
+  uscisPass: "",
 };
 
 const userSchema = yup.object().shape({
@@ -63,6 +61,8 @@ const userSchema = yup.object().shape({
   height: yup.string().required("required"),
   eyeColor: yup.string().required("required"),
   hairColor: yup.string().required("required"),
+  uscisLogin: yup.string().required("required"),
+  uscisPass: yup.string().required("required"),
 });
 
 const Form = () => {
@@ -149,7 +149,7 @@ const Form = () => {
                   name="email"
                   error={!!touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
                   fullWidth
@@ -162,7 +162,20 @@ const Form = () => {
                   name="phone"
                   error={!!touched.phone && !!errors.phone}
                   helperText={touched.phone && errors.phone}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Date Of Birth"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.dateOfBirth}
+                  name="dateOfBirth"
+                  error={!!touched.dateOfBirth && !!errors.dateOfBirth}
+                  helperText={touched.dateOfBirth && errors.dateOfBirth}
+                  sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
                   fullWidth
@@ -357,6 +370,32 @@ const Form = () => {
                   name="hairColor"
                   error={!!touched.hairColor && !!errors.hairColor}
                   helperText={touched.hairColor && errors.hairColor}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="USCIS Login"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.uscisLogin}
+                  name="uscisLogin"
+                  error={!!touched.uscisLogin && !!errors.uscisLogin}
+                  helperText={touched.uscisLogin && errors.uscisLogin}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="USCIS Password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.uscisPass}
+                  name="uscisPass"
+                  error={!!touched.uscisPass && !!errors.uscisPass}
+                  helperText={touched.uscisPass && errors.uscisPass}
                   sx={{ gridColumn: "span 4" }}
                 />
                 

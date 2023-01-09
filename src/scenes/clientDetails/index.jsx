@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { Box } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
@@ -62,12 +62,13 @@ const ClientDetails = () => {
   if (client) {
     columns = [
       { field: "id", headerName: "Key", width: 250 },
-      { field: "value", headerName: "Value", width: 250 },
+      { field: "value", headerName: "Value", width: 300 },
     ];
 
     rows = [
       { id: "First Name", value: client.firstName },
       { id: "Last Name", value: client.lastName },
+      { id: "Date of Birth", value: client.dateOfBirth },
       { id: "Email", value: client.email },
       { id: "Phone Number", value: client.phone },
       { id: "Street Address", value: client.streetAddress },
@@ -87,37 +88,42 @@ const ClientDetails = () => {
       { id: "Height", value: client.height },
       { id: "Eye Color", value: client.eyeColor },
       { id: "Hair Color", value: client.hairColor },
+      { id: "USCIS Login", value: client.uscisLogin },
+      { id: "USCIS Password", value: client.uscisPass },
     ];
   }
-
 
   return (
     client && (
       <Box
         m="20px"
         sx={{
-          justifyContent: "center",
+          display: "flex",
+          // flexDirection: 'column',
+          // justifyContent: "center",
           height: "100%",
-          mx: "auto",
+          // mx: "auto",
           my: "auto",
         }}
       >
         <Box
           sx={{
             display: "flex",
+            flexDirection: "column",
             height: "100%",
             width: 600,
             justifyContent: "center",
             alignItems: "bottom",
             mx: "auto",
-            my: "auto"
+            // my: "auto"
           }}
         >
+          <Header title="Client Details" />
           <DataGrid
             rows={rows}
             columns={columns}
             sx={{ justifyContent: "center" }}
-            pageSize={18}
+            pageSize={21}
           />
         </Box>
       </Box>
