@@ -60,7 +60,8 @@ const Dashboard = () => {
         gap="20px"
       >
         {/* ROW 1 */}
-        <Box
+        {/* EMAIL SENT BOX */}
+        {/* <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -78,8 +79,9 @@ const Dashboard = () => {
               />
             }
           />
-        </Box>
-        <Box
+        </Box> */}
+        {/* SALES BOX */}
+        {/* <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -97,7 +99,9 @@ const Dashboard = () => {
               />
             }
           />
-        </Box>
+        </Box> */}
+        {/* TOTAL CLIENTS BOX
+        CONNECT TO FIRESTORE */}
         <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
@@ -107,7 +111,7 @@ const Dashboard = () => {
         >
           <StatBox
             title="32,441"
-            subtitle="New Clients"
+            subtitle="Clients"
             progress="0.30"
             increase="+5%"
             icon={
@@ -117,7 +121,8 @@ const Dashboard = () => {
             }
           />
         </Box>
-        <Box
+        {/* TRAFFIC RECEIVED BOX */}
+        {/* <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -135,10 +140,11 @@ const Dashboard = () => {
               />
             }
           />
-        </Box>
+        </Box> */}
 
         {/* ROW 2 */}
-        <Box
+        {/* REVENUE GENERATED CHART */}
+        {/* <Box
           gridColumn="span 8"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -178,7 +184,10 @@ const Dashboard = () => {
             <LineChart isDashboard={true} />
           </Box>
         </Box>
-        <Box
+         */}
+
+        {/* RECENT TRANSACTIONS */}
+        {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -227,10 +236,10 @@ const Dashboard = () => {
               </Box>
             </Box>
           ))}
-        </Box>
+        </Box> */}
 
         {/* ROW 3 */}
-        <Box
+        {/* <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -288,7 +297,7 @@ const Dashboard = () => {
           <Box height="200px">
             <GeographyChart isDashboard={true} />
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   ));
