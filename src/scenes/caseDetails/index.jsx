@@ -117,7 +117,7 @@ const CaseDetails = () => {
             rowsPerPageOptions={[4]}
           />
         </Box>
-        <Box sx={{m: 5}}>
+        <Box sx={{m: 5, width: "50%"}}>
           <ClientList props={clientCase.members}></ClientList>
         </Box>
       </Box>
