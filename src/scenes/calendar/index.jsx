@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   List,
@@ -20,14 +21,12 @@ import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../firebase'
 
 const Calendar = () => {
-  const [user,
-    //  loading,
-      // error
-    ] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+  const navigate  = useNavigate();
 
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
@@ -54,6 +53,12 @@ const Calendar = () => {
       selected.event.remove();
     }
   };
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/');;
+    }
+  }, [user, navigate]);
 
   return (user && (
     <Box m="20px">
