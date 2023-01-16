@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { getDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import ClientList from "../../components/ClientList";
 
 const CaseDetails = () => {
   const [clientCase, setClientCase] = useState([]);
@@ -15,11 +16,11 @@ const CaseDetails = () => {
   const caseId = id["id"];
   let docSnap;
 
-  const docRef = doc(db, "cases", caseId)
+  const docRef = doc(db, "cases", caseId);
   const getCase = async () => {
     docSnap = await getDoc(docRef);
     setClientCase(docSnap.data());
-  }
+  };
   useEffect(() => {
     getCase();
   }, []);
@@ -59,7 +60,6 @@ const CaseDetails = () => {
   //   }
   // }, [user, navigate]);
 
-
   // THIS IS JUST ASSIGNING THE VERY FIRST CASE IN THE DB
   // if (cases[0]) {
   //   clientCase = cases[0];
@@ -84,40 +84,44 @@ const CaseDetails = () => {
   }
 
   return (
-    clientCase &&
-    <Box
-      m="20px"
-      sx={{
-        display: "flex",
-        // flexDirection: 'column',
-        // justifyContent: "center",
-        height: "100%",
-        // mx: "auto",
-        my: "auto",
-      }}
-    >
+    clientCase && (
       <Box
+        m="20px"
         sx={{
           display: "flex",
-          flexDirection: "column",
+          // flexDirection: 'column',
+          // justifyContent: "center",
           height: "100%",
-          width: 600,
-          justifyContent: "center",
-          alignItems: "bottom",
-          mx: "auto",
-          // my: "auto"
+          // mx: "auto",
+          my: "auto",
         }}
       >
-        <Header title="Case Details" />
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          sx={{ justifyContent: "center" }}
-          pageSize={4}
-          rowsPerPageOptions={[4]}
-        />
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "55%",
+            width: 600,
+            justifyContent: "center",
+            alignItems: "bottom",
+            mx: "auto",
+            // my: "auto"
+          }}
+        >
+          <Header title="Case Details" />
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            sx={{ justifyContent: "center" }}
+            pageSize={4}
+            rowsPerPageOptions={[4]}
+          />
+        </Box>
+        <Box sx={{m: 5}}>
+          <ClientList props={clientCase.members}></ClientList>
+        </Box>
       </Box>
-    </Box>
+    )
   );
 };
 
