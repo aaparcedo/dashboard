@@ -19,10 +19,11 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar";
 import PrivateRoutes from "./PrivateRoutes";
-import ClientDetailsPage from "./scenes/clientDetails";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase";
+import Cases from "./scenes/cases";
+import CaseDetails from "./scenes/caseDetails";
 
 function App() {
   const [user, loading, error] = useAuthState(auth);
@@ -67,6 +68,8 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} exact />
                 <Route path="/team" element={<Team />} />
                 <Route path="/clients" element={<Clients />} />
+                <Route path="/cases/:id" element={<CaseDetails />} />
+                <Route path="/cases" element={<Cases />} />
                 <Route path="/invoices" element={<Invoices />} />
                 <Route path="/form" element={<Form />} />
                 <Route path="/bar" element={<Bar />} />

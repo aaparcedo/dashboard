@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
@@ -154,6 +155,13 @@ const Sidebar = () => {
               title="Clients Information"
               to="/clients"
               icon={<ContactsOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Cases"
+              to="/cases"
+              icon={<FolderOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

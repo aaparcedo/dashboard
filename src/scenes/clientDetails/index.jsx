@@ -6,55 +6,64 @@ import { useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase";
 import { useState, useEffect } from "react";
-import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { collection, getDocs, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { spacing } from "@mui/system";
 
 const ClientDetails = () => {
-  const [user, loading, error] = useAuthState(auth);
-  const [clients, setClients] = useState([]);
-  const clientsCollectionRef = collection(db, "clients");
+  // const [user, loading, error] = useAuthState(auth);
+  const [client, setClient] = useState([]);
+  // const clientsCollectionRef = collection(db, "clients");
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
-  const navigate = useNavigate();
+  // const colors = tokens(theme.palette.mode);
+  // const navigate = useNavigate();
   const id = useParams();
-  const clientId = id["id"] - 1;
+  const clientId = id["id"];
+  console.log(clientId);
 
-  const getClients = async () => {
-    try {
-      const data = await getDocs(clientsCollectionRef);
-      setClients(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    } catch (error) {
-      // console.error(error);
-    } finally {
-      // Perform any necessary clean-up tasks here
-    }
-  };
+  let docSnap;
 
+  const docRef = doc(db, "clients", clientId)
+  const getClient = async () => {
+    docSnap = await getDoc(docRef);
+    console.log(docSnap.data());
+    setClient(docSnap.data());
+  }
   useEffect(() => {
-    const unsubscribe = onSnapshot(clientsCollectionRef, (snapshot) => {
-      const updatedClients = snapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setClients(updatedClients);
-    });
-
-    return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
+    getClient();
   }, []);
+
+  console.log(client);
+
+  // const getClients = async () => {
+  //   try {
+  //     const data = await getDocs(clientsCollectionRef);
+  //     setClients(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   } catch (error) {
+  //     // console.error(error);
+  //   } finally {
+  //     // Perform any necessary clean-up tasks here
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const unsubscribe = onSnapshot(clientsCollectionRef, (snapshot) => {
+  //     const updatedClients = snapshot.docs.map((doc) => ({
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     }));
+  //     setClients(updatedClients);
+  //   });
+
+  //   return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
+  // }, []);
 
   // useEffect(() => {
   //   if (!user) {
   //     navigate("/");
   //   }
   // }, [user, navigate]);
-
-  let client;
-
-  if (clients[clientId]) {
-    client = clients[clientId];
-  }
 
   let columns = [];
   let rows = [];
@@ -94,7 +103,8 @@ const ClientDetails = () => {
   }
 
   return (
-    client && (
+    // client && 
+    (
       <Box
         m="20px"
         sx={{
@@ -124,6 +134,7 @@ const ClientDetails = () => {
             columns={columns}
             sx={{ justifyContent: "center" }}
             pageSize={21}
+            rowsPerPageOptions={[21]}
           />
         </Box>
       </Box>
