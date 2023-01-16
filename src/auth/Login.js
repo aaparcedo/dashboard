@@ -31,6 +31,8 @@ const Login = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);
+        console.log(result.user);
+
 
         // Get the values that we want from the response
         const name = result._tokenResponse.firstName;
