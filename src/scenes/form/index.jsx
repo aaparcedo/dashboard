@@ -3,9 +3,11 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
-
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { collection, addDoc } from "firebase/firestore";
 
 const phoneRegExp =
   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
@@ -13,6 +15,7 @@ const phoneRegExp =
 const initialValues = {
   firstName: "",
   lastName: "",
+  dateOfBirth: "",
   email: "",
   phone: "",
   streetAddress: "",
@@ -30,34 +33,37 @@ const initialValues = {
   height: "",
   eyeColor: "",
   hairColor: "",
-
+  uscisLogin: "",
+  uscisPass: "",
 };
 
 const userSchema = yup.object().shape({
   firstName: yup.string().required("required"),
   lastName: yup.string().required("required"),
-  email: yup.string().email("Invalid email").required("required"),
+  email: yup.string().email("Invalid email"),
   phone: yup
     .string()
     .matches(phoneRegExp, "Phone number is not valid")
     .required("required"),
   // THIS HAS TO BE CHANGED TO A VALID DATE OF BIRTH INSTEAD OF JUST A STRING
-  dateOfBirth: yup.string().required("required"),
-  streetAddress: yup.string().required("required"),
-  city: yup.string().required("required"),
-  zipCode: yup.string().required("required"),
-  civilStatus: yup.string().required("required"),
-  alienNumber: yup.string().required("required"),
-  visaNumber: yup.string().required("required"),
-  i94Number: yup.string().required("required"),
-  dateOfArrival: yup.string().required("required"),
-  immigrationStatusOnArrival: yup.string().required("required"),
-  currentImmigrationStatus: yup.string().required("required"),
-  religion: yup.string().required("required"),
-  weight: yup.string().required("required"),
-  height: yup.string().required("required"),
-  eyeColor: yup.string().required("required"),
-  hairColor: yup.string().required("required"),
+  dateOfBirth: yup.string(),
+  streetAddress: yup.string(),
+  city: yup.string(),
+  zipCode: yup.string(),
+  civilStatus: yup.string(),
+  alienNumber: yup.string(),
+  visaNumber: yup.string(),
+  i94Number: yup.string(),
+  dateOfArrival: yup.string(),
+  immigrationStatusOnArrival: yup.string(),
+  currentImmigrationStatus: yup.string(),
+  religion: yup.string(),
+  weight: yup.string(),
+  height: yup.string(),
+  eyeColor: yup.string(),
+  hairColor: yup.string(),
+  uscisLogin: yup.string(),
+  uscisPass: yup.string(),
 });
 
 const Form = () => {
@@ -66,12 +72,30 @@ const Form = () => {
     //  loading,
     // error
   ] = useAuthState(auth);
-
+  const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width: 600px)");
-
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const clientsCollectionRef = collection(db, "clients");
+  const handleFormSubmit = async (values) => {
+    await addDoc(clientsCollectionRef, {
+      name: initialValues.firstName,
+    });
   };
+
+  const [newFirstName, setNewFirstName] = useState("");
+  const [newLastName, setNewLastName] = useState("");
+  const [newPhoneNumber, setNewPhoneNumber] = useState("");
+
+
+  const createUser = async () => {
+    await addDoc(clientsCollectionRef, { firstName: newFirstName, lastName: newLastName, phone: newPhoneNumber});
+  };
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
   return (
     user && (
       <Box m="20px">
@@ -105,8 +129,8 @@ const Form = () => {
                   type="text"
                   label="First Name"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
+                  onChange={(event) => { setNewFirstName(event.target.value);}}
+                  value={newFirstName}
                   name="firstName"
                   error={!!touched.firstName && !!errors.firstName}
                   helperText={touched.firstName && errors.firstName}
@@ -118,8 +142,8 @@ const Form = () => {
                   type="text"
                   label="Last Name"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
+                  onChange={(event) => { setNewLastName(event.target.value);}}
+                  value={newLastName}
                   name="lastName"
                   error={!!touched.lastName && !!errors.lastName}
                   helperText={touched.lastName && errors.lastName}
@@ -136,7 +160,7 @@ const Form = () => {
                   name="email"
                   error={!!touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
                   fullWidth
@@ -144,12 +168,25 @@ const Form = () => {
                   type="text"
                   label="Phone Number"
                   onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.phone}
+                  onChange={(event) => { setNewPhoneNumber(event.target.value);}}
+                  value={newPhoneNumber}
                   name="phone"
                   error={!!touched.phone && !!errors.phone}
                   helperText={touched.phone && errors.phone}
-                  sx={{ gridColumn: "span 2" }}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Date Of Birth"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.dateOfBirth}
+                  name="dateOfBirth"
+                  error={!!touched.dateOfBirth && !!errors.dateOfBirth}
+                  helperText={touched.dateOfBirth && errors.dateOfBirth}
+                  sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
                   fullWidth
@@ -264,8 +301,14 @@ const Form = () => {
                   onChange={handleChange}
                   value={values.immigrationStatusOnArrival}
                   name="immigrationStatusOnArrival"
-                  error={!!touched.immigrationStatusOnArrival && !!errors.immigrationStatusOnArrival}
-                  helperText={touched.immigrationStatusOnArrival && errors.immigrationStatusOnArrival}
+                  error={
+                    !!touched.immigrationStatusOnArrival &&
+                    !!errors.immigrationStatusOnArrival
+                  }
+                  helperText={
+                    touched.immigrationStatusOnArrival &&
+                    errors.immigrationStatusOnArrival
+                  }
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
@@ -277,8 +320,14 @@ const Form = () => {
                   onChange={handleChange}
                   value={values.currentImmigrationStatus}
                   name="currentImmigrationStatus"
-                  error={!!touched.currentImmigrationStatus && !!errors.currentImmigrationStatus}
-                  helperText={touched.currentImmigrationStatus && errors.currentImmigrationStatus}
+                  error={
+                    !!touched.currentImmigrationStatus &&
+                    !!errors.currentImmigrationStatus
+                  }
+                  helperText={
+                    touched.currentImmigrationStatus &&
+                    errors.currentImmigrationStatus
+                  }
                   sx={{ gridColumn: "span 4" }}
                 />
                 <TextField
@@ -346,10 +395,35 @@ const Form = () => {
                   helperText={touched.hairColor && errors.hairColor}
                   sx={{ gridColumn: "span 4" }}
                 />
-                
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="USCIS Login"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.uscisLogin}
+                  name="uscisLogin"
+                  error={!!touched.uscisLogin && !!errors.uscisLogin}
+                  helperText={touched.uscisLogin && errors.uscisLogin}
+                  sx={{ gridColumn: "span 4" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="USCIS Password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.uscisPass}
+                  name="uscisPass"
+                  error={!!touched.uscisPass && !!errors.uscisPass}
+                  helperText={touched.uscisPass && errors.uscisPass}
+                  sx={{ gridColumn: "span 4" }}
+                />
               </Box>
               <Box display="flex" justifyContent="end" mt="20px">
-                <Button type="submit" color="secondary" variant="contained">
+                <Button onClick={createUser} type="submit" color="secondary" variant="contained">
                   Create New User
                 </Button>
               </Box>
