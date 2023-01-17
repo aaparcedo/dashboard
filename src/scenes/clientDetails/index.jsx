@@ -1,7 +1,4 @@
-import { Box } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase";
@@ -9,10 +6,10 @@ import { useState, useEffect } from "react";
 import { collection, getDocs, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { spacing } from "@mui/system";
+import '../../scenes/clientDetails/style.css'
 
 const ClientDetails = () => {
-  // const [user, loading, error] = useAuthState(auth);
+  const [user, loading, error] = useAuthState(auth);
   const [client, setClient] = useState([]);
   // const clientsCollectionRef = collection(db, "clients");
   const theme = useTheme();
@@ -68,78 +65,110 @@ const ClientDetails = () => {
   let columns = [];
   let rows = [];
 
-  if (client) {
-    columns = [
-      { field: "id", headerName: "Key", width: 250 },
-      { field: "value", headerName: "Value", width: 300 },
-    ];
-
-    rows = [
-      { id: "First Name", value: client.firstName },
-      { id: "Last Name", value: client.lastName },
-      { id: "Date of Birth", value: client.dateOfBirth },
-      { id: "Email", value: client.email },
-      { id: "Phone Number", value: client.phone },
-      { id: "Street Address", value: client.streetAddress },
-      { id: "City", value: client.city },
-      { id: "Zip Code", value: client.zipCode },
-      { id: "Civil Status", value: client.civilStatus },
-      { id: "Alien Number", value: client.alienNumber },
-      { id: "Visa Number", value: client.visaNumber },
-      { id: "I-94", value: client.i94Number },
-      { id: "Date of Arrival Into the US", value: client.dateOfArrival },
-      {
-        id: "Current Immigration Status",
-        value: client.currentImmigrationStatus,
-      },
-      { id: "Religion", value: client.religion },
-      { id: "Weight", value: client.weight },
-      { id: "Height", value: client.height },
-      { id: "Eye Color", value: client.eyeColor },
-      { id: "Hair Color", value: client.hairColor },
-      { id: "USCIS Login", value: client.uscisLogin },
-      { id: "USCIS Password", value: client.uscisPass },
-    ];
-  }
-
   return (
-    // client && 
-    (
-      <Box
-        m="20px"
-        sx={{
-          display: "flex",
-          // flexDirection: 'column',
-          // justifyContent: "center",
-          height: "100%",
-          // mx: "auto",
-          my: "auto",
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            width: 600,
-            justifyContent: "center",
-            alignItems: "bottom",
-            mx: "auto",
-            // my: "auto"
-          }}
-        >
-          <Header title="Client Details" />
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            sx={{ justifyContent: "center" }}
-            pageSize={21}
-            rowsPerPageOptions={[21]}
-          />
-        </Box>
-      </Box>
-    )
+    user && (
+    client && (
+        <div className="basicDetails">
+           <table className="black-text">
+            <thead>
+              <tr>
+                <th className="basic-details-header">Personal</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody className="black-text">
+              <tr>
+                <td>Name</td>
+              </tr>
+              <tr>
+                <td>Date of Birth</td>
+              </tr>
+              <tr>
+                <td>Religion</td>
+              </tr>
+              <tr>
+                <td>Civil Status</td>
+              </tr>
+              <tr>
+                <td>Weight</td>
+              </tr>
+              <tr>
+                <td>Height</td>
+              </tr>
+              <tr>
+                <td>Eye Color</td>
+              </tr>
+              <tr>
+                <td>Hair Color</td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="black-text">
+            <thead>
+              <tr>
+                <th className="basic-details-header">Contact</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody className="black-text">
+              <tr>
+                <td>Email</td>
+              </tr>
+              <tr>
+                <td>Phone Number</td>
+              </tr>
+              <tr>
+                <td>Address</td>
+              </tr>
+              <tr>
+                <td>City</td>
+              </tr>
+              <tr>
+                <td>Zip Code</td>
+              </tr>
+              <tr>
+                <td>State/Region</td>
+              </tr>
+              <tr>
+                <td>Country</td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="black-text">
+            <thead>
+              <tr>
+                <th className="basic-details-header">Immigration</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody className="black-text">
+              <tr>
+                <td>Alien Number</td>
+              </tr>
+              <tr>
+                <td>Visa Number</td>
+              </tr>
+              <tr>
+                <td>I-94</td>
+              </tr>
+              <tr>
+                <td>Date of Arrival</td>
+              </tr>
+              <tr>
+                <td>Immigration Status</td>
+              </tr>
+              <tr>
+                <td>USCIS Login</td>
+              </tr>
+              <tr>
+                <td>USCIS Password</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      ) 
+    ) 
   );
-};
+}
 
 export default ClientDetails;
