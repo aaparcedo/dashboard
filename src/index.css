@@ -16,8 +16,10 @@ body,
 
 .app {
   display: flex;
-  position: fixed;
+  position: flex;
 }
+
+
 
 ::-webkit-scrollbar{
   width: 10px;

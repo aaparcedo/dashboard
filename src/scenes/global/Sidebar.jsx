@@ -54,6 +54,8 @@ const Sidebar = () => {
       sx={{
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
+          // THIS FIXES THE SIDEBAR IN POSITION BUT AFFECTS OTHER COMPONENTS
+          position: 'fixed',
         },
         "& .pro-icon-wrapper": {
           backgroundColor: `transparent !important`,
@@ -69,7 +71,7 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
+      <ProSidebar collapsed={isCollapsed} >
         <Menu iconShape="square">
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
