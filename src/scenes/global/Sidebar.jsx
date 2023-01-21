@@ -55,10 +55,11 @@ const Sidebar = () => {
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
           // THIS FIXES THE SIDEBAR IN POSITION BUT AFFECTS OTHER COMPONENTS
-          position: 'fixed',
+          position: 'flex', 
         },
         "& .pro-icon-wrapper": {
           backgroundColor: `transparent !important`,
+          
         },
         "& .pro-inner-item": {
           padding: "5px 35px 5px 20px !important",

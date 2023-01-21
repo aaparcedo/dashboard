@@ -6,6 +6,7 @@ import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 // import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 // import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Person from "@mui/icons-material/Person";
+import FolderOutlinedIcon from "@mui/icons-material/FolderOutlined";
 // import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
 // import LineChart from "../../components/LineChart";
@@ -18,7 +19,7 @@ import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase";
 
-import { collection, getCountFromServer, onSnapshot } from "firebase/firestore";
+import { collection, getCountFromServer, onSnapshot, query, where } from "firebase/firestore";
 
 const Dashboard = () => {
   const [clientCount, setClientCount] = useState(0);
@@ -33,6 +34,32 @@ const Dashboard = () => {
   useEffect(() => {
     getClientCount();
   })
+
+  const [caseCount, setCaseCount] = useState(0);
+  const casesCollectionRef = collection(db, "cases");
+  let caseSnapshot;
+  const getCaseCount = async () => {
+    caseSnapshot = await getCountFromServer(casesCollectionRef);
+    setCaseCount(caseSnapshot.data().count);
+    return caseSnapshot;
+  };
+  useEffect(() => {
+    getCaseCount();
+  })
+
+  const [activeCaseCount, setActiveCaseCount] = useState(0);
+  let activeCaseCountSnapshot;
+  const getActiveCaseCount = async () => {
+    const query_ = query(casesCollectionRef, where('active', '==', true))
+    activeCaseCountSnapshot = await getCountFromServer(query_);
+    console.log(activeCaseCountSnapshot);
+    setActiveCaseCount(activeCaseCountSnapshot.data().count);
+    return activeCaseCountSnapshot;
+  }
+  useEffect(() => {
+    getActiveCaseCount();
+  })
+
 
   const [
     user,
@@ -137,6 +164,49 @@ const Dashboard = () => {
               // increase="+5%"
               icon={
                 <Person
+                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          {/* ACTIVE CASES
+          CONNECT TO FIRESTORE */}
+          <Box
+            gridColumn="span 3"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox
+              // REPLACE WITH CASE COUNT
+              title={activeCaseCount}
+              subtitle="Active Cases"
+              // progress="0.30"
+              // increase="+5%"
+              icon={
+                <FolderOutlinedIcon
+                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+                />
+              }
+            />
+          </Box>
+          {/* TOTAL CASES */}
+          <Box
+            gridColumn="span 3"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <StatBox
+              // REPLACE WITH CASE COUNT
+              title={caseCount}
+              subtitle="Cases"
+              // progress="0.30"
+              // increase="+5%"
+              icon={
+                <FolderOutlinedIcon
                   sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
                 />
               }
