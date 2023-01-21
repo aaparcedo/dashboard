@@ -13,6 +13,7 @@ import Header from "../../components/Header";
 // import GeographyChart from "../../components/GeographyChart";
 // import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
+import ClientCard from "../../components/ClientCard";
 // import ProgressCircle from "../../components/ProgressCircle";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -148,8 +149,7 @@ const Dashboard = () => {
             }
           />
         </Box> */}
-          {/* TOTAL CLIENTS BOX
-        CONNECT TO FIRESTORE */}
+          {/* TOTAL CLIENTS BOX */}
           <Box
             gridColumn="span 3"
             backgroundColor={colors.primary[400]}
@@ -169,8 +169,7 @@ const Dashboard = () => {
               }
             />
           </Box>
-          {/* ACTIVE CASES
-          CONNECT TO FIRESTORE */}
+          {/* ACTIVE CASES */}
           <Box
             gridColumn="span 3"
             backgroundColor={colors.primary[400]}
@@ -212,6 +211,18 @@ const Dashboard = () => {
               }
             />
           </Box>
+          {/* CLIENT CARD EXAMPLE */}
+          
+            <ClientCard
+              
+              firstName={"Jacob"}
+              lastName={"Myers"}
+              pictureURL = {"https://i.pinimg.com/originals/f2/a7/42/f2a742ec86bba7efe2b7f048d80d8fd5.jpg"}
+              // progress="0.30"
+              // increase="+5%"
+              email = {"fakeemail@gmail.com"}
+            />
+          
           {/* TRAFFIC RECEIVED BOX */}
           {/* <Box
           gridColumn="span 3"

@@ -49,7 +49,7 @@ const Clients = () => {
   }, [user, navigate]);
 
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.4 },
+    { field: "id", headerName: "ID", flex: 1 },
 
     {
       field: "firstName",
