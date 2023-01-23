@@ -56,7 +56,7 @@ const Sidebar = () => {
           background: `${colors.primary[400]} !important`,
           // THIS FIXES THE SIDEBAR IN POSITION BUT AFFECTS OTHER COMPONENTS
           position: 'fixed',
-          width: isCollapsed ? "75px" : "270px",
+          width: isCollapsed ? "80px" : "270px",
         },
         "& .pro-icon-wrapper": {
           backgroundColor: `transparent !important`,
