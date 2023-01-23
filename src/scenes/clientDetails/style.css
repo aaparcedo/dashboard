@@ -13,16 +13,6 @@
     --box-shadow: 0 2rem 3 rem var(--color-light);
 }
 
-main .basicDetails{
-    margin-top: 2rem;
-    
-
-}
-
-main .basicDetails h2{
-    margin-bottom: 0.8rem;
-}
-
 main .basicDetails table{
     background: var(--color-white);
     width: 1000px;
@@ -54,13 +44,25 @@ main .basicDetails table:hover {
     color: black;
  }
 
- main table tbody td{
+  td{
     height: 2.8rem;
     border-bottom: 1px solid var(--color-light);
  }
 
  main table thead th{
     height: 4rem;
+    border-bottom: 1px solid var(--color-light);
+    font-size: 1rem; 
+ }
+
+ .client-data {
+    text-align: left !important;
+    color: #828282
+  }
+
+  
+  main table .bottom-personal, .bottom-contact, .bottom-immigration{
+    height: 3.5rem;
     border-bottom: 1px solid var(--color-light);
     font-size: 1rem; 
  }

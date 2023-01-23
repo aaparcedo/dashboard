@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { signInWithGoogle } from "../firebase";
 
 const Login = () => {
+  const [user, loading ] = useAuthState(auth);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,6 +54,11 @@ const Login = () => {
       });
   };
 
+  useEffect(() => {
+    if (user) {
+      navigate("dashboard");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="flex w-full h-screen">

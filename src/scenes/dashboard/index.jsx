@@ -1,18 +1,18 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-// import { mockTransactions } from "../../data/mockData";
+import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
-// import EmailIcon from "@mui/icons-material/Email";
-// import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-// import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import EmailIcon from "@mui/icons-material/Email";
+import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Person from "@mui/icons-material/Person";
-// import TrafficIcon from "@mui/icons-material/Traffic";
+import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
-// import LineChart from "../../components/LineChart";
-// import GeographyChart from "../../components/GeographyChart";
-// import BarChart from "../../components/BarChart";
+import LineChart from "../../components/LineChart";
+import GeographyChart from "../../components/GeographyChart";
+import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
-// import ProgressCircle from "../../components/ProgressCircle";
+import ProgressCircle from "../../components/ProgressCircle";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -82,7 +82,7 @@ const Dashboard = () => {
         >
           {/* ROW 1 */}
           {/* EMAIL SENT BOX */}
-          {/* <Box
+           <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -100,9 +100,9 @@ const Dashboard = () => {
               />
             }
           />
-        </Box> */}
+        </Box> 
           {/* SALES BOX */}
-          {/* <Box
+           <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -120,7 +120,7 @@ const Dashboard = () => {
               />
             }
           />
-        </Box> */}
+        </Box> 
           {/* TOTAL CLIENTS BOX
         CONNECT TO FIRESTORE */}
           <Box
@@ -143,7 +143,7 @@ const Dashboard = () => {
             />
           </Box>
           {/* TRAFFIC RECEIVED BOX */}
-          {/* <Box
+          <Box
           gridColumn="span 3"
           backgroundColor={colors.primary[400]}
           display="flex"
@@ -161,11 +161,11 @@ const Dashboard = () => {
               />
             }
           />
-        </Box> */}
+        </Box> 
 
           {/* ROW 2 */}
           {/* REVENUE GENERATED CHART */}
-          {/* <Box
+           <Box
           gridColumn="span 8"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -205,10 +205,9 @@ const Dashboard = () => {
             <LineChart isDashboard={true} />
           </Box>
         </Box>
-         */}
 
-          {/* RECENT TRANSACTIONS */}
-          {/* <Box
+          {/* ACTIVE CASES */}
+           <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -223,7 +222,7 @@ const Dashboard = () => {
             p="15px"
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Active Cases
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (
@@ -257,10 +256,10 @@ const Dashboard = () => {
               </Box>
             </Box>
           ))}
-        </Box> */}
+        </Box>
 
           {/* ROW 3 */}
-          {/* <Box
+           <Box
           gridColumn="span 4"
           gridRow="span 2"
           backgroundColor={colors.primary[400]}
@@ -318,7 +317,7 @@ const Dashboard = () => {
           <Box height="200px">
             <GeographyChart isDashboard={true} />
           </Box>
-        </Box> */}
+        </Box> 
         </Box>
       </Box>
     )
