@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
@@ -7,6 +8,7 @@ import { signInWithGoogle } from "../firebase";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -51,6 +53,12 @@ const Login = () => {
         console.log(error);
       });
   };
+
+    useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user, navigate]);
 
 
   return (
