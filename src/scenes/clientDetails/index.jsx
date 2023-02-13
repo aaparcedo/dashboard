@@ -1,12 +1,15 @@
 import { tokens } from "../../theme";
-import { useTheme } from "@mui/material";
+import { Typography, useTheme } from "@mui/material";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../firebase";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { collection, getDocs, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import '../../scenes/clientDetails/style.css'
+import { Box } from "@mui/system";
+import Button from '@mui/material/Button';
+import { spacing } from '@mui/system';
 
 const ClientDetails = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -65,14 +68,40 @@ const ClientDetails = () => {
   let columns = [];
   let rows = [];
 
+  const personal = useRef(null);
+  const contact = useRef(null);
+  const immigration = useRef(null);
+
+  const scrollToSection = (elementRef) => {
+    window.scrollTo({
+      top: elementRef.current.offsetTop,
+      behavior: 'smooth'
+    })
+  }
+
   return (
     user && (
     client && (
+
+        
+
         <div className="basicDetails">
-           <table className="black-text">
+          <Box sx={{ p: 2}}>
+            <Box display="flex" justifyContent="center" sx={{width: 1000, height: 50, backgroundColor: 'white', m: 'auto', p: 1, borderRadius: 1}}>
+
+              <Button onClick={() => scrollToSection(personal)} variant="contained">Personal</Button>
+              <Box sx={{width: 100}}></Box>
+              <Button onClick={() => scrollToSection(contact)} variant="contained">Contact</Button>
+              <Box sx={{width: 100}}></Box>
+              <Button onClick={() => scrollToSection(immigration)} variant="contained">Immigration</Button>
+            
+            </Box>
+            
+          </Box>
+           <table ref={personal} className="black-text">
             <thead>
               <tr>
-                <th className="personal-header">Personal</th>
+                <th className="personal">Personal</th>
                 <th></th>
               </tr>
             </thead>
@@ -111,10 +140,10 @@ const ClientDetails = () => {
               </tr>
             </tbody>
           </table>
-          <table className="black-text client-table">
+          <table ref={contact} className="black-text client-table">
             <thead>
               <tr>
-                <th className="basic-details-header">Contact</th>
+                <th className="contact">Contact</th>
                 <th></th>
               </tr>
             </thead>
@@ -149,7 +178,7 @@ const ClientDetails = () => {
               </tr>
             </tbody>
           </table>
-          <table className="black-text">
+          <table ref={immigration} className="black-text">
             <thead>
               <tr>
                 <th className="basic-details-header">Immigration</th>
