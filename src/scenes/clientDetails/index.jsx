@@ -15,12 +15,18 @@ const ClientDetails = () => {
   const [user, loading, error] = useAuthState(auth);
   const [client, setClient] = useState([]);
   // const clientsCollectionRef = collection(db, "clients");
-  const theme = useTheme();
+  // const theme = useTheme();
   // const colors = tokens(theme.palette.mode);
   // const navigate = useNavigate();
   const id = useParams();
   const clientId = id["id"];
   console.log(clientId);
+
+  const NavBar=[
+    {name: "Personal", dis:"translate-x-0"},
+    {name: "Contact", dis:"translate-x-16"},
+    {name: "Immigration", dis:"translate-x-32"}
+  ]
 
   let docSnap;
 
@@ -35,29 +41,6 @@ const ClientDetails = () => {
   }, []);
 
   console.log(client);
-
-  // const getClients = async () => {
-  //   try {
-  //     const data = await getDocs(clientsCollectionRef);
-  //     setClients(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  //   } catch (error) {
-  //     // console.error(error);
-  //   } finally {
-  //     // Perform any necessary clean-up tasks here
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const unsubscribe = onSnapshot(clientsCollectionRef, (snapshot) => {
-  //     const updatedClients = snapshot.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }));
-  //     setClients(updatedClients);
-  //   });
-
-  //   return unsubscribe; // This function will be called when the component unmounts to stop listening to the snapshot
-  // }, []);
 
   // useEffect(() => {
   //   if (!user) {
@@ -78,6 +61,7 @@ const ClientDetails = () => {
       behavior: 'smooth'
     })
   }
+  
 
   return (
     user && (
@@ -98,7 +82,7 @@ const ClientDetails = () => {
             </Box>
             
           </Box>
-           <table ref={personal} className="black-text">
+           <table ref={personal} className="black-text table">
             <thead>
               <tr>
                 <th className="personal">Personal</th>
@@ -108,35 +92,39 @@ const ClientDetails = () => {
             <tbody className="black-text">
               <tr>
                 <td>Name</td>
-                <td className="client-data">{client.firstName}</td> 
+                <td style={{color: '#71797E', textAlign: 'center' }} className="client-data">{client.firstName}</td> 
               </tr>
               <tr>
                 <td>Date of Birth</td>
-                <td className="client-data">{client.dateOfBirth}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.dateOfBirth}</td>
               </tr>
               <tr>
                 <td>Religion</td>
-                <td className="client-data">{client.religion}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.religion}</td>
               </tr>
               <tr>
                 <td>Civil Status</td>
-                <td className="client-data">{client.civilStatus}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.civilStatus}</td>
               </tr>
               <tr>
                 <td>Weight</td>
-                <td className="client-data">{client.weight}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.weight}</td>
               </tr>
               <tr>
                 <td>Height</td>
-                <td className="client-data">{client.height}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.height}</td>
               </tr>
               <tr>
                 <td>Eye Color</td>
-                <td className="client-data">{client.eyeColor}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.eyeColor}</td>
               </tr>
               <tr>
                 <td>Hair Color</td>
-                <td className="client-data">{client.hairColor }</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.hairColor }</td>
+              </tr>
+              <tr>
+                <button className="bg-transparent hover:bg-indigo-500 text-indigo-500 font-semibold 
+                hover:text-white py-2 px-5 my-2 rounded-lg border border-indigo-500 hover:border-transparent"> Add Row </button>
               </tr>
             </tbody>
           </table>
@@ -150,31 +138,35 @@ const ClientDetails = () => {
             <tbody className="black-text">
               <tr>
                 <td>Email</td>
-                <td className="client-data">{client.email}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.email}</td>
               </tr>
               <tr>
                 <td>Phone Number</td>
-                <td className="client-data">{client.phone}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.phone}</td>
               </tr>
               <tr>
                 <td>Address</td>
-                <td className="client-data">{client.streetAddress}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.streetAddress}</td>
               </tr>
               <tr>
                 <td>City</td>
-                <td className="client-data">{client.city}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.city}</td>
               </tr>
               <tr>
                 <td>Zip Code</td>
-                <td className="client-data">{client.zipCode}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.zipCode}</td>
               </tr>
               <tr>
                 <td>State/Region</td>
-                <td className="client-data">{client.state}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.state}</td>
               </tr>
               <tr>
                 <td>Country</td>
-                <td className="client-data">{client.country}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.country}</td>
+              </tr>
+              <tr>
+                <button className="bg-transparent hover:bg-indigo-500 text-indigo-500 font-semibold 
+                hover:text-white py-2 px-5 my-2 rounded-lg border border-indigo-500 hover:border-transparent"> Add Row </button>
               </tr>
             </tbody>
           </table>
@@ -188,31 +180,39 @@ const ClientDetails = () => {
             <tbody className="black-text">
               <tr>
                 <td>Alien Number</td>
-                <td className="client-data">{client.alienNumber}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.alienNumber}</td>
               </tr>
               <tr>
                 <td>Visa Number</td>
-                <td className="client-data">{client.visaNumber}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.visaNumber}</td>
               </tr>
               <tr>
                 <td>I-94</td>
-                <td className="client-data">{client.i94Number}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.i94Number}</td>
               </tr>
               <tr>
                 <td>Date of Arrival</td>
-                <td className="client-data">{client.dateOfArrival}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.dateOfArrival}</td>
               </tr>
               <tr>
                 <td>Immigration Status</td>
-                <td className="client-data">{client.currentImmigrationStatus}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.currentImmigrationStatus}</td>
+              </tr>
+              <tr>
+                <td>Status on Arrival</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.immigrationStatusOnArrival}</td>
               </tr>
               <tr>
                 <td>USCIS Login</td>
-                <td className="client-data">{client.uscisLogin}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.uscisLogin}</td>
               </tr>
               <tr>
                 <td>USCIS Password</td>
-                <td className="client-data">{client.uscisPass}</td>
+                <td style={{color: '#71797E'}} className="client-data">{client.uscisPass}</td>
+              </tr>
+              <tr>
+                <button className="bg-transparent hover:bg-indigo-500 text-indigo-500 font-semibold 
+               hover:text-white py-2 px-5 my-2 rounded-lg border border-indigo-500 hover:border-transparent"> Add Row </button>
               </tr>
             </tbody>
           </table>
