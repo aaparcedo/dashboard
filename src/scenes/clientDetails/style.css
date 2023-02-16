@@ -1,66 +1,96 @@
 :root {
-    --color-white: #fff;
-    --color-light: rgba(132, 139, 200, 0.2);
-
-    --card-border-radius: 0.6rem;
-    --border-radius-1: 0.4rem;
-    --border-radius-2: 0.8rem;
-    --border-radius-3: 1.2rem;
-
-    --card-padding: 1.8rem;
-    --pading-1: 1.2rem;
-
-    --box-shadow: 0 2rem 3 rem var(--color-light);
+  --color-white: #fff;
+  --color-light: rgba(132, 139, 200, 0.2);
+  --card-border-radius: 0.6rem;
+  --border-radius-1: 0.4rem;
+  --border-radius-2: 0.8rem;
+  --border-radius-3: 1.2rem;
+  --card-padding: 1.8rem;
+  --padding-1: 1.2rem;
+  --box-shadow: 0 2rem 3rem var(--color-light);
 }
 
-main .basicDetails{
-    margin-top: 2rem;
-    
-
+main .basicDetails {
+  margin-top: 2rem;
+  padding-bottom: 2rem;
 }
 
-main .basicDetails h2{
-    margin-bottom: 0.8rem;
+main .basicDetails h2 {
+  margin-bottom: 0.8rem;
 }
 
-main .basicDetails table{
-    background: var(--color-white);
-    width: 1000px;
-    border-radius: var(--card-border-radius);
-    padding: var(--card-padding);
-    text-align: left;
-	text-indent: 30px;
-    box-shadow: var(--box-shadow);
-    transition: all 300ms ease;
-    margin: auto;
-    margin-bottom: 2.5rem;
-    overflow: hidden;
+main .basicDetails table {
+  background: var(--color-white);
+  width: 1000px;
+  border-radius: var(--card-border-radius);
+  padding: var(--card-padding);
+  text-align: left;
+  text-indent: 30px;
+  box-shadow: var(--box-shadow);
+  transition: all 300ms ease;
+  margin: auto;
+  margin-bottom: 2.5rem;
+  padding-bottom: 100px;
+  overflow: hidden;
 }
 
 main .basicDetails table:hover {
-    box-shadow:  none;
+  box-shadow: none;
+  padding-bottom: 50px;
 }
 
 .basic-details-header {
-    font-size: 1.rem; 
-    font-weight: bold;  
-  }
+  font-size: 1rem;
+  font-weight: bold;
+}
 
-.black-text td {
-    color: black;
- }
- 
- .black-text th{
-    color: black;
- }
+.black-text td,
+.black-text th {
+  color: black;
+}
 
- main table tbody td{
-    height: 2.8rem;
-    border-bottom: 1px solid var(--color-light);
- }
+main table tbody td {
+  height: 2.8rem;
+  border-bottom: 1px solid var(--color-light);
+  margin: 0 auto;
+  margin-left: -50%;
+}
 
- main table thead th{
-    height: 4rem;
-    border-bottom: 1px solid var(--color-light);
-    font-size: 1rem; 
- }
+main table thead th {
+  height: 4rem;
+  border-bottom: 1px solid var(--color-light);
+  font-size: 1rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  text-align: left;
+  vertical-align: middle;
+  width: 33.33%;
+  border: 1px solid #ccc;
+}
+
+.box-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.box {
+  display: inline-block;
+}
+
+table td:first-child {
+  width: 30%;
+}
+
+table td:last-child {
+  width: 70%;
+  text-align: left !important;
+}
+
