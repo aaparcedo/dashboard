@@ -17,7 +17,7 @@ const ClientDetails = () => {
   // const clientsCollectionRef = collection(db, "clients");
   // const theme = useTheme();
   // const colors = tokens(theme.palette.mode);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const id = useParams();
   const clientId = id["id"];
   console.log(clientId);
@@ -42,11 +42,11 @@ const ClientDetails = () => {
 
   console.log(client);
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/");
-  //   }
-  // }, [user, navigate]);
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   let columns = [];
   let rows = [];
@@ -56,8 +56,12 @@ const ClientDetails = () => {
   const immigration = useRef(null);
 
   const scrollToSection = (elementRef) => {
+    const elementTop = elementRef.current.offsetTop;
+    const elementHeight = elementRef.current.offsetHeight;
+    const windowHeight = window.innerHeight;
+    const scrollPosition = elementTop + elementHeight / 2 - windowHeight / 2;
     window.scrollTo({
-      top: elementRef.current.offsetTop,
+      top: scrollPosition,
       behavior: 'smooth'
     })
   }
@@ -71,12 +75,12 @@ const ClientDetails = () => {
 
         <div className="basicDetails">
           <Box sx={{ p: 2}}>
-            <Box display="flex" justifyContent="center" sx={{width: 1000, height: 50, backgroundColor: 'white', m: 'auto', p: 1, borderRadius: 1}}>
+            <Box display="flex" justifyContent="flex-start" sx={{width: 1000, height: 50, backgroundColor: 'white', m: 'auto', p: 1, borderRadius: 1}}>
 
               <Button onClick={() => scrollToSection(personal)} variant="contained">Personal</Button>
-              <Box sx={{width: 100}}></Box>
+              <Box sx={{width: 50}}></Box>
               <Button onClick={() => scrollToSection(contact)} variant="contained">Contact</Button>
-              <Box sx={{width: 100}}></Box>
+              <Box sx={{width: 50}}></Box>
               <Button onClick={() => scrollToSection(immigration)} variant="contained">Immigration</Button>
             
             </Box>

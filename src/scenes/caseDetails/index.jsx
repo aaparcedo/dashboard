@@ -126,3 +126,4 @@ const CaseDetails = () => {
 };
 
 export default CaseDetails;
+
